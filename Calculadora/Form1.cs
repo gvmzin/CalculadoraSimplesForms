@@ -23,11 +23,11 @@ namespace Calculadora
         public Form1()
         {
             InitializeComponent();
-            btnHistorico.Click += btnHistorico_Click;
-            lstHistoricoCompleto.Visible = false;
+            btnHistorico.Click += btnHistorico_Click; // Associa o evento de clique do botão de histórico
+            lstHistoricoCompleto.Visible = false; // Esconde o histórico completo inicialmente
         }
 
-        private void NumeroClick(object sender, EventArgs e)
+        private void NumeroClick(object sender, EventArgs e) // Método para lidar com o clique dos botões numéricos
         {
             Button btn = sender as Button;
 
@@ -37,7 +37,7 @@ namespace Calculadora
             else
                 lblResult.Text += btn.Text;
 
-            if (operacao == "")
+            if (operacao == "") //
             {
                 lblNumberOne.Text = lblResult.Text;
                 lblNumberTwo.Text = "";
@@ -48,7 +48,7 @@ namespace Calculadora
             }
             lblResult.Visible = true;
         }
-
+        // Método para lidar com o clique dos botões de operação
         private void OperacaoClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -58,26 +58,27 @@ namespace Calculadora
             lblNumberOne.Text = valor1.ToString();
             lblResult.Visible = true;
         }
-
+        // Método para lidar com o clique do botão de igual
         private void btnIgual_Click(object sender, EventArgs e)
         {
             valor2 = double.Parse(lblResult.Text);
             lblNumberTwo.Text = valor2.ToString();
             double resultado = 0;
             string expressao = $"{valor1} {operacao} {valor2}";
+            // Verifica se a operação é válida
             switch (operacao)
             {
-                case "+":
+                case "+": // Adiciona os valores
                     resultado = valor1 + valor2;
                     break;
-                case "-":
+                case "-": // Subtrai os valores
                     resultado = valor1 - valor2;
                     break;
-                case "*":
+                case "*": // Multiplica os valores
                     resultado = valor1 * valor2;
                     break;
-                case "/":
-                    if (valor2 != 0)
+                case "/": // Divide os valores
+                    if (valor2 != 0) // Verifica se o divisor é zero
                         resultado = valor1 / valor2;
                     else
                     {
@@ -87,17 +88,18 @@ namespace Calculadora
                     }
                     break;
             }
+            // Atualiza o resultado na interface
             lblResult.Text = resultado.ToString();
             lblResult.Visible = true;
             AdicionarAoHistorico($"{expressao} = {resultado}");
         }
-
+        // Método para adicionar o cálculo ao histórico
         private void AdicionarAoHistorico(string item)
         {
             historicoCompleto.Add(item);
             lblHistorico.Text = item; // Atualiza o label com o último cálculo
         }
-
+        // Método para lidar com o clique do botão de limpar
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             lblResult.Text = "0";
@@ -109,7 +111,7 @@ namespace Calculadora
             lblSing.Text = "";
             lblResult.Visible = true;
         }
-
+        // Método para lidar com o clique do botão de limpar histórico
         private void btnHistorico_Click(object sender, EventArgs e)
         {
             if (!historicoVisivel)
@@ -128,7 +130,7 @@ namespace Calculadora
                 EsconderHistorico();
             }
         }
-
+        // Método para esconder o histórico completo
         private void EsconderHistorico()
         {
             lstHistoricoCompleto.Visible = false;
@@ -136,6 +138,8 @@ namespace Calculadora
             historicoVisivel = false;
         }
 
+
+        // Método para lidar com o clique do botão de ver histórico
         private void btnVerHistorico_Click(object sender, EventArgs e)
         {
             if (!historicoVisivel)
