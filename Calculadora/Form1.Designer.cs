@@ -46,13 +46,13 @@
             this.div = new System.Windows.Forms.Button();
             this.backspace = new System.Windows.Forms.Button();
             this.lblResult = new System.Windows.Forms.Label();
-            this.lblNumberTwo = new System.Windows.Forms.Label();
-            this.lblSing = new System.Windows.Forms.Label();
-            this.lblNumberOne = new System.Windows.Forms.Label();
             this.lblHistorico = new System.Windows.Forms.Label();
             this.btnHistorico = new System.Windows.Forms.Button();
             this.lstHistoricoCompleto = new System.Windows.Forms.ListView();
             this.zero = new System.Windows.Forms.Button();
+            this.percent = new System.Windows.Forms.Button();
+            this.btnVirgula = new System.Windows.Forms.Button();
+            this.pow = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // one
@@ -157,9 +157,9 @@
             // equal
             // 
             this.equal.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equal.Location = new System.Drawing.Point(137, 338);
+            this.equal.Location = new System.Drawing.Point(197, 338);
             this.equal.Name = "equal";
-            this.equal.Size = new System.Drawing.Size(52, 49);
+            this.equal.Size = new System.Drawing.Size(51, 49);
             this.equal.TabIndex = 23;
             this.equal.Text = "=";
             this.equal.UseVisualStyleBackColor = true;
@@ -168,7 +168,7 @@
             // minus
             // 
             this.minus.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.minus.Location = new System.Drawing.Point(195, 173);
+            this.minus.Location = new System.Drawing.Point(197, 228);
             this.minus.Name = "minus";
             this.minus.Size = new System.Drawing.Size(52, 49);
             this.minus.TabIndex = 24;
@@ -179,7 +179,7 @@
             // plus
             // 
             this.plus.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.plus.Location = new System.Drawing.Point(195, 228);
+            this.plus.Location = new System.Drawing.Point(197, 283);
             this.plus.Name = "plus";
             this.plus.Size = new System.Drawing.Size(51, 48);
             this.plus.TabIndex = 25;
@@ -201,7 +201,7 @@
             // mult
             // 
             this.mult.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mult.Location = new System.Drawing.Point(192, 282);
+            this.mult.Location = new System.Drawing.Point(197, 173);
             this.mult.Name = "mult";
             this.mult.Size = new System.Drawing.Size(52, 49);
             this.mult.TabIndex = 27;
@@ -212,7 +212,7 @@
             // div
             // 
             this.div.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.div.Location = new System.Drawing.Point(192, 338);
+            this.div.Location = new System.Drawing.Point(139, 118);
             this.div.Name = "div";
             this.div.Size = new System.Drawing.Size(52, 49);
             this.div.TabIndex = 28;
@@ -225,9 +225,9 @@
             this.backspace.BackgroundImage = global::Calculadora.Properties.Resources.backspace_icon_151584__1_;
             this.backspace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.backspace.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.backspace.Location = new System.Drawing.Point(137, 118);
+            this.backspace.Location = new System.Drawing.Point(197, 118);
             this.backspace.Name = "backspace";
-            this.backspace.Size = new System.Drawing.Size(107, 49);
+            this.backspace.Size = new System.Drawing.Size(52, 49);
             this.backspace.TabIndex = 29;
             this.backspace.UseVisualStyleBackColor = true;
             this.backspace.Click += new System.EventHandler(this.btnLimpar_Click);
@@ -236,43 +236,13 @@
             // 
             this.lblResult.Font = new System.Drawing.Font("Ubuntu Mono", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResult.ForeColor = System.Drawing.Color.White;
-            this.lblResult.Location = new System.Drawing.Point(23, 12);
+            this.lblResult.Location = new System.Drawing.Point(21, 9);
             this.lblResult.Name = "lblResult";
             this.lblResult.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblResult.Size = new System.Drawing.Size(230, 97);
             this.lblResult.TabIndex = 33;
             this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblResult.Visible = false;
-            // 
-            // lblNumberTwo
-            // 
-            this.lblNumberTwo.Font = new System.Drawing.Font("Ubuntu Mono", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumberTwo.ForeColor = System.Drawing.Color.White;
-            this.lblNumberTwo.Location = new System.Drawing.Point(213, 38);
-            this.lblNumberTwo.Name = "lblNumberTwo";
-            this.lblNumberTwo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblNumberTwo.Size = new System.Drawing.Size(40, 47);
-            this.lblNumberTwo.TabIndex = 30;
-            // 
-            // lblSing
-            // 
-            this.lblSing.Font = new System.Drawing.Font("Ubuntu Mono", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSing.ForeColor = System.Drawing.Color.White;
-            this.lblSing.Location = new System.Drawing.Point(170, 38);
-            this.lblSing.Name = "lblSing";
-            this.lblSing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblSing.Size = new System.Drawing.Size(40, 47);
-            this.lblSing.TabIndex = 31;
-            // 
-            // lblNumberOne
-            // 
-            this.lblNumberOne.Font = new System.Drawing.Font("Ubuntu Mono", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumberOne.ForeColor = System.Drawing.Color.White;
-            this.lblNumberOne.Location = new System.Drawing.Point(124, 38);
-            this.lblNumberOne.Name = "lblNumberOne";
-            this.lblNumberOne.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblNumberOne.Size = new System.Drawing.Size(40, 47);
-            this.lblNumberOne.TabIndex = 32;
             // 
             // lblHistorico
             // 
@@ -298,10 +268,10 @@
             this.lstHistoricoCompleto.ForeColor = System.Drawing.SystemColors.Window;
             this.lstHistoricoCompleto.FullRowSelect = true;
             this.lstHistoricoCompleto.HideSelection = false;
-            this.lstHistoricoCompleto.Location = new System.Drawing.Point(23, 41);
+            this.lstHistoricoCompleto.Location = new System.Drawing.Point(20, 40);
             this.lstHistoricoCompleto.Margin = new System.Windows.Forms.Padding(0);
             this.lstHistoricoCompleto.Name = "lstHistoricoCompleto";
-            this.lstHistoricoCompleto.Size = new System.Drawing.Size(225, 346);
+            this.lstHistoricoCompleto.Size = new System.Drawing.Size(236, 346);
             this.lstHistoricoCompleto.TabIndex = 36;
             this.lstHistoricoCompleto.UseCompatibleStateImageBehavior = false;
             this.lstHistoricoCompleto.View = System.Windows.Forms.View.List;
@@ -318,6 +288,36 @@
             this.zero.UseVisualStyleBackColor = true;
             this.zero.Click += new System.EventHandler(this.NumeroClick);
             // 
+            // percent
+            // 
+            this.percent.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.percent.Location = new System.Drawing.Point(81, 118);
+            this.percent.Name = "percent";
+            this.percent.Size = new System.Drawing.Size(52, 49);
+            this.percent.TabIndex = 38;
+            this.percent.Text = "%";
+            this.percent.UseVisualStyleBackColor = true;
+            // 
+            // btnVirgula
+            // 
+            this.btnVirgula.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVirgula.Location = new System.Drawing.Point(139, 338);
+            this.btnVirgula.Name = "btnVirgula";
+            this.btnVirgula.Size = new System.Drawing.Size(52, 49);
+            this.btnVirgula.TabIndex = 39;
+            this.btnVirgula.Text = ",";
+            this.btnVirgula.UseVisualStyleBackColor = true;
+            // 
+            // pow
+            // 
+            this.pow.Font = new System.Drawing.Font("Ubuntu Mono", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pow.Location = new System.Drawing.Point(23, 338);
+            this.pow.Name = "pow";
+            this.pow.Size = new System.Drawing.Size(52, 49);
+            this.pow.TabIndex = 40;
+            this.pow.Text = "X²";
+            this.pow.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -325,13 +325,12 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(265, 395);
             this.Controls.Add(this.lstHistoricoCompleto);
+            this.Controls.Add(this.btnVirgula);
+            this.Controls.Add(this.percent);
             this.Controls.Add(this.zero);
             this.Controls.Add(this.btnHistorico);
             this.Controls.Add(this.lblHistorico);
             this.Controls.Add(this.lblResult);
-            this.Controls.Add(this.lblNumberOne);
-            this.Controls.Add(this.lblSing);
-            this.Controls.Add(this.lblNumberTwo);
             this.Controls.Add(this.backspace);
             this.Controls.Add(this.div);
             this.Controls.Add(this.mult);
@@ -348,6 +347,7 @@
             this.Controls.Add(this.three);
             this.Controls.Add(this.two);
             this.Controls.Add(this.one);
+            this.Controls.Add(this.pow);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -377,13 +377,13 @@
         private System.Windows.Forms.Button div;
         private System.Windows.Forms.Button backspace;
         private System.Windows.Forms.Label lblResult;
-        private System.Windows.Forms.Label lblNumberTwo;
-        private System.Windows.Forms.Label lblSing;
-        private System.Windows.Forms.Label lblNumberOne;
         private System.Windows.Forms.Label lblHistorico;
         private System.Windows.Forms.Button btnHistorico;
         private System.Windows.Forms.ListView lstHistoricoCompleto;
         private System.Windows.Forms.Button zero;
+        private System.Windows.Forms.Button percent;
+        private System.Windows.Forms.Button btnVirgula;
+        private System.Windows.Forms.Button pow;
     }
 }
 

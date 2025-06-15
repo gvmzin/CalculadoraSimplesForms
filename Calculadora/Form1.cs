@@ -19,99 +19,126 @@ namespace Calculadora
         string operacao = "";
         List<string> historicoCompleto = new List<string>();
         private bool historicoVisivel = false;
+        private bool novoNumero = false;
 
         public Form1()
         {
             InitializeComponent();
+            percent.Click += btnPorcentagem_Click;
+            pow.Click += btnQuadrado_Click;
             btnHistorico.Click += btnHistorico_Click; // Associa o evento de clique do botão de histórico
             lstHistoricoCompleto.Visible = false; // Esconde o histórico completo inicialmente
+            btnVirgula.Click += VirgulaClick;
+            backspace.Click -= btnLimpar_Click; // Remove associação antiga, se houver
+            backspace.Click += btnBackspace_Click;
         }
 
-        private void NumeroClick(object sender, EventArgs e) // Método para lidar com o clique dos botões numéricos
+        private void NumeroClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
-            // Se o resultado está em "0" ou foi feita uma operação, inicia novo número
-            if (lblResult.Text == "0" || (operacao != "" && lblNumberTwo.Text == ""))
+            // Se for novo número, sobrescreve o lblResult
+            if (lblResult.Text == "0" || novoNumero)
+            {
                 lblResult.Text = btn.Text;
+                novoNumero = false;
+            }
             else
+            {
                 lblResult.Text += btn.Text;
+            }
 
-            if (operacao == "") //
-            {
-                lblNumberOne.Text = lblResult.Text;
-                lblNumberTwo.Text = "";
-            }
-            else
-            {
-                lblNumberTwo.Text = lblResult.Text;
-            }
             lblResult.Visible = true;
         }
-        // Método para lidar com o clique dos botões de operação
+
         private void OperacaoClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             valor1 = double.Parse(lblResult.Text);
             operacao = btn.Text;
-            lblSing.Text = operacao;
-            lblNumberOne.Text = valor1.ToString();
-            lblResult.Visible = true;
+            novoNumero = true; // O próximo número será novo
         }
-        // Método para lidar com o clique do botão de igual
+
         private void btnIgual_Click(object sender, EventArgs e)
         {
             valor2 = double.Parse(lblResult.Text);
-            lblNumberTwo.Text = valor2.ToString();
             double resultado = 0;
             string expressao = $"{valor1} {operacao} {valor2}";
-            // Verifica se a operação é válida
             switch (operacao)
             {
-                case "+": // Adiciona os valores
+                case "+":
                     resultado = valor1 + valor2;
                     break;
-                case "-": // Subtrai os valores
+                case "-":
                     resultado = valor1 - valor2;
                     break;
-                case "*": // Multiplica os valores
+                case "*":
                     resultado = valor1 * valor2;
                     break;
-                case "/": // Divide os valores
-                    if (valor2 != 0) // Verifica se o divisor é zero
+                case "/":
+                    if (valor2 != 0)
                         resultado = valor1 / valor2;
                     else
                     {
                         lblResult.Text = "Erro";
                         AdicionarAoHistorico($"{expressao} = Erro");
+                        novoNumero = true;
                         return;
                     }
                     break;
+                case "%":
+                    resultado = valor1 * (valor2 / 100.0);
+                    break;
+                case "x²":
+                    resultado = Math.Pow(valor1, 2);
+                    expressao = $"{valor1}²";
+                    break;
             }
-            // Atualiza o resultado na interface
             lblResult.Text = resultado.ToString();
             lblResult.Visible = true;
             AdicionarAoHistorico($"{expressao} = {resultado}");
+            novoNumero = true;
         }
-        // Método para adicionar o cálculo ao histórico
-        private void AdicionarAoHistorico(string item)
+
+        private void VirgulaClick(object sender, EventArgs e)
         {
-            historicoCompleto.Add(item);
-            lblHistorico.Text = item; // Atualiza o label com o último cálculo
+            // Se for novo número, inicia com "0,"
+            if (novoNumero)
+            {
+                lblResult.Text = "0,";
+                novoNumero = false;
+            }
+            // Se não tem vírgula, adiciona ao final
+            else if (!lblResult.Text.Contains(","))
+            {
+                lblResult.Text += ",";
+            }
+            lblResult.Visible = true;
         }
-        // Método para lidar com o clique do botão de limpar
+
+        private void btnBackspace_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(lblResult.Text) && lblResult.Text.Length > 1)
+            {
+                lblResult.Text = lblResult.Text.Substring(0, lblResult.Text.Length - 1);
+            }
+            else
+            {
+                lblResult.Text = "0";
+            }
+            lblResult.Visible = true;
+        }
+
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             lblResult.Text = "0";
             valor1 = 0;
             valor2 = 0;
             operacao = "";
-            lblNumberOne.Text = "";
-            lblNumberTwo.Text = "";
-            lblSing.Text = "";
+            novoNumero = false;
             lblResult.Visible = true;
         }
-        // Método para lidar com o clique do botão de limpar histórico
+
         private void btnHistorico_Click(object sender, EventArgs e)
         {
             if (!historicoVisivel)
@@ -130,7 +157,7 @@ namespace Calculadora
                 EsconderHistorico();
             }
         }
-        // Método para esconder o histórico completo
+
         private void EsconderHistorico()
         {
             lstHistoricoCompleto.Visible = false;
@@ -138,25 +165,73 @@ namespace Calculadora
             historicoVisivel = false;
         }
 
-
-        // Método para lidar com o clique do botão de ver histórico
-        private void btnVerHistorico_Click(object sender, EventArgs e)
+        private void AdicionarAoHistorico(string item)
         {
-            if (!historicoVisivel)
+            historicoCompleto.Add(item);
+            lblHistorico.Text = item;
+        }
+
+        private void btnPorcentagem_Click(object sender, EventArgs e)
+        {
+            // Se já existe um valor e operação, calcula a porcentagem do valor1 em relação ao valor2 e já executa a operação
+            if (!string.IsNullOrEmpty(operacao))
             {
-                lstHistorico.Items.Clear();
-                foreach (var item in historicoCompleto)
+                valor2 = double.Parse(lblResult.Text);
+                double porcentagem = valor1 * (valor2 / 100.0);
+
+                // Atualiza o lblResult para mostrar o valor da porcentagem
+                lblResult.Text = porcentagem.ToString();
+
+                // Executa a operação imediatamente
+                double resultado = 0;
+                string expressao = $"{valor1} {operacao} {porcentagem}";
+                switch (operacao)
                 {
-                    lstHistorico.Items.Add(item);
+                    case "+":
+                        resultado = valor1 + porcentagem;
+                        break;
+                    case "-":
+                        resultado = valor1 - porcentagem;
+                        break;
+                    case "*":
+                        resultado = valor1 * porcentagem;
+                        break;
+                    case "/":
+                        if (porcentagem != 0)
+                            resultado = valor1 / porcentagem;
+                        else
+                        {
+                            lblResult.Text = "Erro";
+                            AdicionarAoHistorico($"{expressao} = Erro");
+                            novoNumero = true;
+                            operacao = "";
+                            return;
+                        }
+                        break;
                 }
-                lstHistorico.Visible = true;
-                btnVerHistorico.Text = "Esconder Histórico";
-                historicoVisivel = true;
+                lblResult.Text = resultado.ToString();
+                AdicionarAoHistorico($"{expressao} = {resultado}");
+                novoNumero = true;
+                operacao = ""; // Limpa a operação para novo cálculo
             }
             else
             {
-                EsconderHistorico();
+                // Se não há operação, apenas converte o valor atual em porcentagem
+                valor1 = double.Parse(lblResult.Text);
+                double resultado = valor1 / 100.0;
+                lblResult.Text = resultado.ToString();
+                AdicionarAoHistorico($"{valor1}% = {resultado}");
+                novoNumero = true;
             }
+        }
+
+        private void btnQuadrado_Click(object sender, EventArgs e)
+        {
+            double valor = double.Parse(lblResult.Text);
+            double resultado = Math.Pow(valor, 2);
+            lblResult.Text = resultado.ToString();
+            AdicionarAoHistorico($"{valor}² = {resultado}");
+            novoNumero = true;
         }
     }
 }
