@@ -12,15 +12,18 @@ namespace Calculadora
 {
     public partial class Form1 : Form
     {
+        // Componentes da interface
         private System.Windows.Forms.Button btnVerHistorico;
         private System.Windows.Forms.ListBox lstHistorico;
 
+        // Variáveis para armazenar os valores e a operação
         private double valor1 = 0, valor2 = 0;
         private string operacao = "";
         private bool novoNumero = false;
         private List<string> historicoCompleto = new List<string>();
         private bool historicoVisivel = false;
 
+        // Método para inicializar os componentes da interface
         public Form1()
         {
             InitializeComponent();
@@ -33,10 +36,12 @@ namespace Calculadora
             backspace.Click += btnBackspace_Click;
         }
 
-        private void NumeroClick(object sender, EventArgs e)
+        // Método para lidar com o clique nos botões numéricos
+        private void NumeroClick(object sender, EventArgs e) 
         {
             Button btn = sender as Button;
 
+            // Verifica se o botão clicado é um número ou a vírgula
             if (lblResult.Text == "0" || novoNumero)
             {
                 lblResult.Text = btn.Text;
@@ -50,6 +55,7 @@ namespace Calculadora
             lblResult.Visible = true;
         }
 
+        // Método para lidar com o clique na vírgula
         private void VirgulaClick(object sender, EventArgs e)
         {
             if (novoNumero)
@@ -64,6 +70,7 @@ namespace Calculadora
             lblResult.Visible = true;
         }
 
+        // Método para lidar com o clique nas operações
         private void OperacaoClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -74,6 +81,7 @@ namespace Calculadora
             novoNumero = true; // O próximo número digitado será o valor2
         }
 
+        // Método para lidar com o clique no botão de igual
         private void btnIgual_Click(object sender, EventArgs e)
         {
             double.TryParse(lblResult.Text, out valor2);
@@ -91,9 +99,9 @@ namespace Calculadora
                     resultado = valor1 * valor2;
                     break;
                 case "/":
-                    if (valor2 != 0)
+                    if (valor2 != 0) // Verifica se o divisor é diferente de zero para evitar divisão por zero
                         resultado = valor1 / valor2;
-                    else
+                    else // Se for zero, exibe erro
                     {
                         lblResult.Text = "Erro";
                         AdicionarAoHistorico($"{expressao} = Erro");
@@ -117,20 +125,22 @@ namespace Calculadora
             operacao = "";
         }
 
+        // Método para lidar com o clique no botão de backspace
         private void btnBackspace_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(lblResult.Text) && lblResult.Text.Length > 1)
+            if (!string.IsNullOrEmpty(lblResult.Text) && lblResult.Text.Length > 1) // Verifica se há mais de um caractere
             {
                 lblResult.Text = lblResult.Text.Substring(0, lblResult.Text.Length - 1);
             }
-            else
+            else // Se só houver um caractere ou estiver vazio, reseta para "0"
             {
                 lblResult.Text = "0";
             }
             lblResult.Visible = true;
         }
 
-        private void btnLimpar_Click(object sender, EventArgs e)
+        // Método para lidar com o clique no botão de limpar
+        private void btnLimpar_Click(object sender, EventArgs e) // Limpa todos os valores e reseta a calculadora
         {
             lblResult.Text = "0";
             valor1 = 0;
@@ -140,6 +150,7 @@ namespace Calculadora
             lblResult.Visible = true;
         }
 
+        // Método para lidar com o clique no botão de porcentagem
         private void btnPorcentagem_Click(object sender, EventArgs e)
         {
             // Se já existe um valor e operação, calcula a porcentagem do valor1 em relação ao valor2 e já executa a operação
@@ -194,6 +205,7 @@ namespace Calculadora
             }
         }
 
+        // Método para lidar com o clique no botão de quadrado
         private void btnQuadrado_Click(object sender, EventArgs e)
         {
             double.TryParse(lblResult.Text, out valor1);
@@ -203,12 +215,14 @@ namespace Calculadora
             novoNumero = true;
         }
 
+        // Método para adicionar uma expressão ao histórico e atualizar o label de histórico
         private void AdicionarAoHistorico(string item)
         {
             historicoCompleto.Add(item);
             lblHistorico.Text = item;
         }
 
+        // Método para lidar com o clique no botão de histórico
         private void btnHistorico_Click(object sender, EventArgs e)
         {
             if (!historicoVisivel)
