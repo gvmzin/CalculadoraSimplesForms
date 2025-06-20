@@ -15,11 +15,11 @@ namespace Calculadora
         private System.Windows.Forms.Button btnVerHistorico;
         private System.Windows.Forms.ListBox lstHistorico;
 
-        double valor1 = 0, valor2 = 0;
-        string operacao = "";
-        List<string> historicoCompleto = new List<string>();
-        private bool historicoVisivel = false;
+        private double valor1 = 0, valor2 = 0;
+        private string operacao = "";
         private bool novoNumero = false;
+        private List<string> historicoCompleto = new List<string>();
+        private bool historicoVisivel = false;
 
         public Form1()
         {
@@ -37,7 +37,6 @@ namespace Calculadora
         {
             Button btn = sender as Button;
 
-            // Se for novo número, sobrescreve o lblResult
             if (lblResult.Text == "0" || novoNumero)
             {
                 lblResult.Text = btn.Text;
@@ -51,17 +50,33 @@ namespace Calculadora
             lblResult.Visible = true;
         }
 
+        private void VirgulaClick(object sender, EventArgs e)
+        {
+            if (novoNumero)
+            {
+                lblResult.Text = "0,";
+                novoNumero = false;
+            }
+            else if (!lblResult.Text.Contains(","))
+            {
+                lblResult.Text += ",";
+            }
+            lblResult.Visible = true;
+        }
+
         private void OperacaoClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            valor1 = double.Parse(lblResult.Text);
+
+            // Tenta converter o texto do lblResult para double, considerando a cultura local (vírgula como separador decimal)
+            double.TryParse(lblResult.Text, out valor1);
             operacao = btn.Text;
-            novoNumero = true; // O próximo número será novo
+            novoNumero = true; // O próximo número digitado será o valor2
         }
 
         private void btnIgual_Click(object sender, EventArgs e)
         {
-            valor2 = double.Parse(lblResult.Text);
+            double.TryParse(lblResult.Text, out valor2);
             double resultado = 0;
             string expressao = $"{valor1} {operacao} {valor2}";
             switch (operacao)
@@ -83,6 +98,7 @@ namespace Calculadora
                         lblResult.Text = "Erro";
                         AdicionarAoHistorico($"{expressao} = Erro");
                         novoNumero = true;
+                        operacao = "";
                         return;
                     }
                     break;
@@ -98,22 +114,7 @@ namespace Calculadora
             lblResult.Visible = true;
             AdicionarAoHistorico($"{expressao} = {resultado}");
             novoNumero = true;
-        }
-
-        private void VirgulaClick(object sender, EventArgs e)
-        {
-            // Se for novo número, inicia com "0,"
-            if (novoNumero)
-            {
-                lblResult.Text = "0,";
-                novoNumero = false;
-            }
-            // Se não tem vírgula, adiciona ao final
-            else if (!lblResult.Text.Contains(","))
-            {
-                lblResult.Text += ",";
-            }
-            lblResult.Visible = true;
+            operacao = "";
         }
 
         private void btnBackspace_Click(object sender, EventArgs e)
@@ -139,44 +140,12 @@ namespace Calculadora
             lblResult.Visible = true;
         }
 
-        private void btnHistorico_Click(object sender, EventArgs e)
-        {
-            if (!historicoVisivel)
-            {
-                lstHistoricoCompleto.Items.Clear();
-                foreach (var item in historicoCompleto)
-                {
-                    lstHistoricoCompleto.Items.Add(new ListViewItem(item));
-                }
-                lstHistoricoCompleto.Visible = true;
-                btnHistorico.Text = "Esconder Histórico";
-                historicoVisivel = true;
-            }
-            else
-            {
-                EsconderHistorico();
-            }
-        }
-
-        private void EsconderHistorico()
-        {
-            lstHistoricoCompleto.Visible = false;
-            btnHistorico.Text = "Histórico";
-            historicoVisivel = false;
-        }
-
-        private void AdicionarAoHistorico(string item)
-        {
-            historicoCompleto.Add(item);
-            lblHistorico.Text = item;
-        }
-
         private void btnPorcentagem_Click(object sender, EventArgs e)
         {
             // Se já existe um valor e operação, calcula a porcentagem do valor1 em relação ao valor2 e já executa a operação
             if (!string.IsNullOrEmpty(operacao))
             {
-                valor2 = double.Parse(lblResult.Text);
+                double.TryParse(lblResult.Text, out valor2);
                 double porcentagem = valor1 * (valor2 / 100.0);
 
                 // Atualiza o lblResult para mostrar o valor da porcentagem
@@ -217,7 +186,7 @@ namespace Calculadora
             else
             {
                 // Se não há operação, apenas converte o valor atual em porcentagem
-                valor1 = double.Parse(lblResult.Text);
+                double.TryParse(lblResult.Text, out valor1);
                 double resultado = valor1 / 100.0;
                 lblResult.Text = resultado.ToString();
                 AdicionarAoHistorico($"{valor1}% = {resultado}");
@@ -227,11 +196,38 @@ namespace Calculadora
 
         private void btnQuadrado_Click(object sender, EventArgs e)
         {
-            double valor = double.Parse(lblResult.Text);
-            double resultado = Math.Pow(valor, 2);
+            double.TryParse(lblResult.Text, out valor1);
+            double resultado = Math.Pow(valor1, 2);
             lblResult.Text = resultado.ToString();
-            AdicionarAoHistorico($"{valor}² = {resultado}");
+            AdicionarAoHistorico($"{valor1}² = {resultado}");
             novoNumero = true;
+        }
+
+        private void AdicionarAoHistorico(string item)
+        {
+            historicoCompleto.Add(item);
+            lblHistorico.Text = item;
+        }
+
+        private void btnHistorico_Click(object sender, EventArgs e)
+        {
+            if (!historicoVisivel)
+            {
+                lstHistoricoCompleto.Items.Clear();
+                foreach (var item in historicoCompleto)
+                {
+                    lstHistoricoCompleto.Items.Add(new ListViewItem(item));
+                }
+                lstHistoricoCompleto.Visible = true;
+                btnHistorico.Text = "Esconder Histórico";
+                historicoVisivel = true;
+            }
+            else
+            {
+                lstHistoricoCompleto.Visible = false;
+                btnHistorico.Text = "Histórico";
+                historicoVisivel = false;
+            }
         }
     }
 }

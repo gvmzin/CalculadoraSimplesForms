@@ -234,14 +234,23 @@
             // 
             // lblResult
             // 
-            this.lblResult.Font = new System.Drawing.Font("Ubuntu Mono", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResult.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lblResult.AllowDrop = true;
+            this.lblResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblResult.AutoEllipsis = true;
+            this.lblResult.Font = new System.Drawing.Font("Ubuntu Mono Medium", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResult.ForeColor = System.Drawing.Color.White;
+            this.lblResult.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblResult.Location = new System.Drawing.Point(21, 9);
+            this.lblResult.Margin = new System.Windows.Forms.Padding(0);
             this.lblResult.Name = "lblResult";
-            this.lblResult.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblResult.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lblResult.Size = new System.Drawing.Size(230, 97);
             this.lblResult.TabIndex = 33;
-            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblResult.UseCompatibleTextRendering = true;
             this.lblResult.Visible = false;
             // 
             // lblHistorico
@@ -268,7 +277,7 @@
             this.lstHistoricoCompleto.ForeColor = System.Drawing.SystemColors.Window;
             this.lstHistoricoCompleto.FullRowSelect = true;
             this.lstHistoricoCompleto.HideSelection = false;
-            this.lstHistoricoCompleto.Location = new System.Drawing.Point(20, 40);
+            this.lstHistoricoCompleto.Location = new System.Drawing.Point(13, 41);
             this.lstHistoricoCompleto.Margin = new System.Windows.Forms.Padding(0);
             this.lstHistoricoCompleto.Name = "lstHistoricoCompleto";
             this.lstHistoricoCompleto.Size = new System.Drawing.Size(236, 346);
@@ -376,7 +385,6 @@
         private System.Windows.Forms.Button mult;
         private System.Windows.Forms.Button div;
         private System.Windows.Forms.Button backspace;
-        private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.Label lblHistorico;
         private System.Windows.Forms.Button btnHistorico;
         private System.Windows.Forms.ListView lstHistoricoCompleto;
@@ -384,6 +392,7 @@
         private System.Windows.Forms.Button percent;
         private System.Windows.Forms.Button btnVirgula;
         private System.Windows.Forms.Button pow;
+        private System.Windows.Forms.Label lblResult;
     }
 }
 
